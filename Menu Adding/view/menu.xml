@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <data>
+
+        <!--
+            Root Menu
+        -->
+        <menuitem id="menu_add_root"
+                  name="Menu Record"
+                  web_icon="MenuAdding,static/icon.png"
+
+                  sequence="200"/>
+
+    </data>
+</odoo>
