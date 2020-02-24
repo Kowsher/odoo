@@ -6,24 +6,27 @@ import speech_recognition as sr
 class StudentRecord(models.Model):
     _name = "test.model"
 
-    file = fields.Many2one("ir.model", string="model")
-    name = fields.Char(string='Name of model', required=True)
-    item_count = fields.Char( string='comment')
+    file = fields.Selection([ ('Yes', 'Speaking Now'),('No', 'Speaking Mode is not opened'),],'Type', default='No')
+    name = fields.Text(string='Name of model', required=True)
+
 
     @api.onchange('file')
     def STT_Bangla(self):
-        if self.file:
+        if self.file == "Yes":
             r = sr.Recognizer()
             with sr.Microphone() as source:
                 print("Speak:")
                 audio = r.listen(source)
             try:
                 self.name = r.recognize_google(audio, language='bn')
+                self.file = 'No'
             except sr.UnknownValueError:
                 self.name = "Could not understand audio"
+                self.file = 'No'
             except sr.RequestError as e:
                 self.name = "Could not request results; {0}".format(e)
-      
+                self.file = 'No'
+
 
 
 
