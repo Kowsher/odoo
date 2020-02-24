@@ -1,0 +1,35 @@
+from odoo import models, fields, api,_
+
+
+class StudentRecord(models.Model):
+    _name = "food.add1"
+
+    file = fields.Many2one("ir.model", string="model")
+    name = fields.Char(string='Name of Food', required=True)
+    item_count = fields.Many2many('student.record.lists' ,string="Item")
+    
+
+    
+    @api.onchange('file')
+    def assign_model(self):
+        if self.file:
+            rec_obj = self.env['student.record.lists']
+            model_obj = self.env[self.file.model]
+            model = model_obj.search([])
+            if model:
+                for mod in model:
+                    if mod.name:
+                        rec_id = rec_obj.search([('name','=',mod.name)])
+                        if not rec_id:
+                            rec_id = rec_obj.create({
+                                       'name':mod.name,
+                                       'model_id':self.file.id
+                                       })
+                        
+            
+
+class StudentRecordLists(models.Model):
+    _name = 'student.record.lists'
+
+    name = fields.Char('Name')
+    model_id = fields.Many2one("ir.model", string="model")
