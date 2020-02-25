@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <!-- Temporary fix: preload all needed JS file instead of loading it by widget component -->
+            <script type="text/javascript" src="/web_diagram/static/lib/js/raphael.js"></script>
+            <script type="text/javascript" src="/web/static/lib/ace/ace.odoo-custom.js"></script>
+            <script type="text/javascript" src="/web/static/lib/ace/mode-python.js"></script>
+            <script type="text/javascript" src="/web/static/lib/ace/mode-xml.js"></script>
+        </xpath>
+    </template>
+
+</odoo>
